@@ -12,14 +12,16 @@ export const Growl = ({ active, message, onDismissed }) => (
 
 export function useGrowl() {
   // state of the growl
-  const [growlActive, setGrowlActive] = React.useState(false)
+  const [growlActive, setGrowlActive] = React.useState(false);
 
   useEffect(() => {
-    const timeId = setTimeout(() => {
+    const timer = setTimeout(() => {
       // After 3 seconds set the show value to false
-      setGrowlActive(false)
-    }, 3000)
-  });
+      setGrowlActive(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+    //Growl Active to avoid redundancy call
+  }, [growlActive]);
 
   return [
     // the first arg is the state
