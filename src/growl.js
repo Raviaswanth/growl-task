@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 
 import './growl.css'
 
@@ -10,16 +11,23 @@ export const Growl = ({ active, message, onDismissed }) => (
 )
 
 export function useGrowl() {
-    // state of the growl
-    const [growlActive, setGrowlActive] = React.useState(false)
+  // state of the growl
+  const [growlActive, setGrowlActive] = React.useState(false)
 
-    return [
-        // the first arg is the state
-        growlActive, 
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      // After 3 seconds set the show value to false
+      setGrowlActive(false)
+    }, 3000)
+  });
 
-        // the second arg is a fn that allows you to safely set its state
-        (active) => {
-            setGrowlActive(active)
-        },
-    ]
+  return [
+    // the first arg is the state
+    growlActive,
+
+    // the second arg is a fn that allows you to safely set its state
+    (active) => {
+      setGrowlActive(active)
+    }
+  ]
 }
